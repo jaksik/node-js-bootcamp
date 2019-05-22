@@ -1,0 +1,34 @@
+body {
+    background-color: lightblue;
+}
+
+h1 {
+    text-align: center;
+    color: black;
+}
+
+li {
+    background-image: url("assets/img/tray.jpg");
+    margin: 5px;
+}
+
+#ready {
+    float: left;
+}
+
+#dev {
+    float: right;
+}
+
+img {
+    width: 200px;
+    margin: 0 450px;
+}
+
+.create-form {
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}

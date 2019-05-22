@@ -1,0 +1,93 @@
+<h1>Eat Da Burger!</h1>
+
+<img src="assets/img/burger.jpg">
+
+<div id="ready">
+<h2>Ready to Eat</h2>
+<ul>
+    {{#each burgers}}
+    {{#unless devoured}}
+    <li>
+        {{burger_name}}
+
+        <button class="change-devoured" data-id="{{id}}" data-newdevoured="{{devoured}}">
+            Eat Da Burger!
+        </button>
+    </li>
+    {{/unless}}
+    {{/each}}
+</ul>
+</div>
+
+<div id="dev">
+<h2>Devoured</h2>
+
+<ul>
+    {{#each burgers}}
+    {{#if devoured}}
+    <li>
+        {{burger_name}}
+    </li>
+    {{/if}}
+    {{/each}}
+</ul>
+</div>
+
+<h3>Make a Burger</h3>
+<form class="create-form">
+
+    <div class="form-group">
+        <input type="text" id="bg" name="name" placeholder="Burger You Want to Make">
+    </div>
+
+    <button type="submit">Make Burger</button>
+</form>
+
+<script type="text/javascript">
+
+    $(function () {
+        $(".change-devoured").on("click", function (event) {
+            var id = $(this).data("id");
+            var newDevoured = $(this).data("newdevoured");
+
+            var newDevouredState = {
+                devoured: newDevoured
+            };
+
+            // Send the PUT request.
+            $.ajax("/api/burgers/" + id, {
+                type: "PUT",
+                data: newDevouredState
+            }).then(
+                function () {
+                    console.log("changed devoured to", newDevoured);
+                    // Reload the page to get the updated list
+                    location.reload();
+                }
+            );
+        });
+
+        $(".create-form").on("submit", function (event) {
+            // Make sure to preventDefault on a submit event.
+            event.preventDefault();
+            console.log("submitted")
+
+            var newBurger = {
+                name: $("#bg").val().trim(),
+            };
+
+            // Send the POST request.
+            $.ajax("/api/burgers", {
+                type: "POST",
+                data: newBurger
+            }).then(
+                function () {
+                    console.log("created new burger");
+                    // Reload the page to get the updated list
+                    location.reload();
+                }
+            );
+        });
+    });
+
+</script>
